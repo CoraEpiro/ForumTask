@@ -34,6 +34,12 @@
 
                                 <div class="entry-content">
                                     <p>@blog.ShortContent</p>
+                                    @if(user != null || user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
+                                    {
+                                        <button class="btn-outline-danger">
+                                            <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@blog.Id">Delete</a>
+                                        </button>
+                                    }
                                     <div class="read-more">
                                         <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@blog.Id">Read More</a>
                                     </div>
@@ -60,7 +66,7 @@
                         else
                         {
                             <li class="page-item">
-                                <a class="page-link" href="/Blog/Blogs?page=@i&pagesize=@Model.PageSize">@i</a>
+                                <a class="page-link" href="/Blog/Blogs?page=@i&pagesize=@Model.PageSize&userID=@user.Id">@i</a>
                             </li>
                         }
                     }

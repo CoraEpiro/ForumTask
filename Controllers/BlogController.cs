@@ -16,7 +16,7 @@ namespace ForumTask.Controllers
             _context = context;
         }
 
-        public void AddDefaultData()
+        private void AddDefaultData()
         {
             var blog1 = new Blog()
             {
@@ -55,8 +55,12 @@ namespace ForumTask.Controllers
         public async Task<IActionResult> Blogs(
             int page = 1,
             int pageSize = 2,
-            User user = null)
+            User user = null,
+            int userID = 0)
         {
+            if (user.Role == null)
+                user = _context.Users.Find(userID);
+
             var count = await _context.Blogs.CountAsync();
             var data = await _context.Blogs
                 .Skip((page - 1) * pageSize)
@@ -72,6 +76,13 @@ namespace ForumTask.Controllers
         {
             var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
             return View(blog);
+        }
+
+        public void DeleteBlog(int id)
+        {
+            var blog = _context.Blogs.FirstOrDefault(b => b.Id == id);
+            _context.Blogs.Remove(blog);
+            _context.SaveChanges();
         }
     }
 }
