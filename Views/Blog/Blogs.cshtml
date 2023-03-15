@@ -1,0 +1,71 @@
+﻿@using ForumTask.DbModels;
+@using System.Drawing;
+@model PaginationModel<Blog>
+@{
+    ViewData["Title"] = "Blog Page";
+    Layout = "_Layout";
+    User user = ViewData["User"] as User;
+}
+
+<body>
+    <main id="main">
+        <!-- ======= Blog Section ======= -->
+        <section id="blog" class="blog">
+            @foreach(var blog in Model.blogs)
+            {
+                <div class="container" data-aos="fade-up">
+                    <div class="row">
+                        <div class="col-lg-8 entries">
+                            <article class="entry">
+                                <div class="entry-img">
+                                    <img src="@Url.Content(blog.CoreImage)" alt="" class="img-fluid" />
+                                </div>
+
+                                <h2 class="entry-title">
+                                    <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@blog.Id">@blog.Title</a>
+                                </h2>
+
+                                <div class="entry-meta">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a asp-controller="Blog" asp-action="SingleBlog">@blog.ContentOwner</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a asp-controller="Blog" asp-action="SingleBlog"><time datetime="2020-01-01">@blog.ReleaseDate.ToString("MM dd, yyyy")</time></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="entry-content">
+                                    <p>@blog.ShortContent</p>
+                                    <div class="read-more">
+                                        <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@blog.Id">Read More</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            }
+        </section><!-- End Blog Section -->
+        <div>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        if (@i == Model.Page)
+                        {
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    @i
+                                </span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Blog/Blogs?page=@i&pagesize=@Model.PageSize">@i</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+    </main><!-- End #main -->
+</body>

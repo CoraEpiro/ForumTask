@@ -1,0 +1,72 @@
+﻿@using ForumTask.DbModels;
+@model Blog
+@{
+    ViewData["Title"] = "Single Blog";
+    Layout = "_Layout";
+}
+
+<body>
+  <main id="main">
+    <!-- ======= Blog Single Section ======= -->
+    <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-8 entries">
+                    <article class="entry entry-single">
+                        <div class="entry-img">
+                            <img src="@Url.Content(Model.CoreImage)" alt="" class="img-fluid">
+                        </div>
+
+                        <h2 class="entry-title">
+                            <a asp-controller="Blog" asp-action="SingleBlog">@Model.Title</a>
+                        </h2>
+
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a asp-controller="Blog" asp-action="SingleBlog">@Model.ContentOwner</a></li>
+                                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a asp-controller="Blog" asp-action="SingleBlog"><time datetime="2020-01-01">@Model.ReleaseDate.ToString("MM dd, yyyy")</time></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="entry-content">
+                            <p>@Model.LongContent[0]</p>
+
+                            <p>@Model.LongContent[1]</p>
+
+                            <blockquote>
+                                <p>@Model.LongContent[2]</p>
+                            </blockquote>
+
+                            <p>@Model.LongContent[3]</p>
+
+                            <h3>@Model.LongContent[4]</h3>
+                            <p>@Model.LongContent[5]</p>
+                            <img src="@Url.Content(Model.ContentImages[0])" class="img-fluid" alt="">
+
+                            <h3>@Model.LongContent[6]</h3>
+                            <p>@Model.LongContent[7]</p>
+                            <p>@Model.LongContent[8]</p>
+                        </div>
+
+                        <div class="entry-footer">
+                            <i class="bi bi-folder"></i>
+                            <ul class="cats">
+                                <li>
+                                    <a href="#">@Model.Category</a>
+                                </li>
+                            </ul>
+
+                            <i class="bi bi-tags"></i>
+                            <ul class="tags">
+                                <li><a href="#">@Model.Tags[0]</a></li>
+                                <li><a href="#">@Model.Tags[1]</a></li>
+                                <li><a href="#">@Model.Tags[2]</a></li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main><!-- End #main -->
+</body>
