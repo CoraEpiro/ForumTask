@@ -18,14 +18,6 @@ namespace ForumTask.DbContexts
             modelBuilder.Entity<Blog>()
                 .Property(p => p.Tags)
                 .HasConversion(stringListConverter!);
-
-            modelBuilder.Entity<Blog>()
-                .Property(p => p.ContentImages)
-                .HasConversion(stringListConverter!);
-
-            modelBuilder.Entity<Blog>()
-                .Property(p => p.LongContent)
-                .HasConversion(stringListConverter!);
         }
 
         public DbSet<Blog> Blogs { get; set; }

@@ -22,6 +22,5 @@ namespace ForumTask.DbModels
         public DateTime ReleaseDate { get; set; }
         public string? Category { get; set; }
         public List<string>? Tags { get; set; }
-        public List<string>? ContentImages { get; set; }
     }
 }
