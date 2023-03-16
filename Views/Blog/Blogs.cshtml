@@ -4,7 +4,9 @@
 @{
     ViewData["Title"] = "Blog Page";
     Layout = "_Layout";
-    User user = ViewData["User"] as User;
+    User user = new User();
+    if (ViewData["User"] is not null)
+        user = ViewData["User"] as User;
 }
 
 <body>
@@ -34,10 +36,13 @@
 
                                 <div class="entry-content">
                                     <p>@blog.ShortContent</p>
-                                    @if(user != null || user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
+                                    @if(user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
                                     {
                                         <button class="btn-outline-danger">
                                             <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@blog.Id">Delete</a>
+                                        </button>
+                                        <button class="btn-outline-danger">
+                                            <a asp-controller="Blog" asp-action="EditBlog" asp-route-id="@blog.Id">Edit</a>
                                         </button>
                                     }
                                     <div class="read-more">

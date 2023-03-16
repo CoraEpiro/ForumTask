@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.longContentTextarea {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
