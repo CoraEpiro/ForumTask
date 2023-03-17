@@ -3,17 +3,23 @@ using ForumTask.DbModels;
 using ForumTask.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using System.IO.Compression;
+
 
 namespace ForumTask.Controllers
 {
     public class BlogController : Controller
     {
         private readonly BlogDataContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public BlogController(BlogDataContext context)
+        public BlogController(BlogDataContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         private void AddDefaultData()
@@ -74,6 +80,29 @@ namespace ForumTask.Controllers
         {
             var blog = _context.Blogs.Find(id);
             return View(blog);
+        }
+        public IActionResult SaveBlog(int id, string titleArea, string contentArea)
+        {
+            var blog = _context.Blogs.Find(id);
+            blog.Title = titleArea;
+            blog.LongContent = contentArea;
+            _context.Blogs.Update(blog);
+            _context.SaveChanges();
+            return RedirectToAction("EditBlog", "Blog", blog);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog(Blog blog)
+        {
+            blog.CoreImage = "~img/blog/blog-1.jpg";
+            _context.Blogs.Add(blog);
+            _context.SaveChanges();
+            return RedirectToAction("SingleBlog", blog.Id);
+        }
+        public IActionResult CreateBlog(int id)
+        {
+            //ViewData["ContentOwner"] = _context.Blogs.Find(id).ContentOwner;
+            return View();
         }
     }
 }

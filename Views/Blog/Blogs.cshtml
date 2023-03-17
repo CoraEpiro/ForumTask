@@ -12,6 +12,12 @@
 <body>
     <main id="main">
         <!-- ======= Blog Section ======= -->
+        @if (user.Role != null)
+        {
+            <button class="btn btn-primary">
+                <a asp-controller="Blog" asp-action="CreateBlog" asp-route-id="@user.Id">Create a new Blog</a>
+            </button>
+        }
         <section id="blog" class="blog">
             @foreach(var blog in Model.blogs)
             {
@@ -38,10 +44,10 @@
                                     <p>@blog.ShortContent</p>
                                     @if(user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
                                     {
-                                        <button class="btn-outline-danger">
+                                        <button class="btn btn-primary">
                                             <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@blog.Id">Delete</a>
                                         </button>
-                                        <button class="btn-outline-danger">
+                                        <button class="btn btn-primary">
                                             <a asp-controller="Blog" asp-action="EditBlog" asp-route-id="@blog.Id">Edit</a>
                                         </button>
                                     }

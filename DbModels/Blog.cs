@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ForumTask.DbModels
 {
@@ -17,8 +18,8 @@ namespace ForumTask.DbModels
         public string? Title { get; set; }
         public string? CoreImage { get; set; }
         public string? ShortContent { get; set; }
-        public string? LongContent { get; set; }
         public string? ContentOwner { get; set; }
+        public string? LongContent { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string? Category { get; set; }
         public List<string>? Tags { get; set; }

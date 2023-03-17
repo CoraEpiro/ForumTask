@@ -1,4 +1,5 @@
 ﻿@using ForumTask.DbModels;
+@using System.Web
 @model Blog
 @{
     ViewData["Title"] = "Single Blog";
@@ -10,47 +11,50 @@
         <!-- ======= Blog Single Section ======= -->
         <section id="blog" class="blog">
             <div class="container" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-lg-8 entries">
-                        <article class="entry entry-single">
-                            <div class="entry-img">
-                                <img src="@Url.Content(Model.CoreImage)" alt="" class="img-fluid">
-                            </div>
+                <form asp-controller="Blog" asp-action="SaveBlog" asp-route-id="@Model.Id" method="post">
+                    <div class="row">
+                        <div class="col-lg-8 entries">
+                            <article class="entry entry-single">
+                                <div class="entry-img">
+                                    <img src="@Url.Content(Model.CoreImage)" alt="" class="img-fluid">
+                                </div>
 
-                            <h2 class="entry-title">
-                                <textarea>@Model.Title</textarea>
-                            </h2>
+                                <h2 class="entry-title">
+                                    <textarea name="titleArea">@Model.Title</textarea>
+                                </h2>
 
-                            <div class="entry-meta">
-                                <ul>
-                                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <p>@Model.ContentOwner</a></li>
-                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <p><time datetime="2020-01-01">@Model.ReleaseDate.ToString("MM dd, yyyy")</time></a></li>
-                                </ul>
-                            </div>
+                                <div class="entry-meta">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <p>@Model.ContentOwner</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <p><time datetime="2020-01-01">@Model.ReleaseDate.ToString("MM dd, yyyy")</time></a></li>
+                                    </ul>
+                                </div>
 
-                            <div class="entry-content">
-                                <textarea class="longContentTextarea">@Model.LongContent</textarea>
-                            </div>
+                                <div class="entry-content">
+                                    <textarea name="contentArea" class="longContentTextarea">@Model.LongContent</textarea>
+                                </div>
 
-                            <div class="entry-footer">
-                                <i class="bi bi-folder"></i>
-                                <ul class="cats">
-                                    <li>
-                                        <p>@Model.Category</a>
-                                    </li>
-                                </ul>
+                                <div class="entry-footer">
+                                    <i class="bi bi-folder"></i>
+                                    <ul class="cats">
+                                        <li>
+                                            <p>@Model.Category</a>
+                                        </li>
+                                    </ul>
 
-                                <i class="bi bi-tags"></i>
-                                <ul class="tags">
-                                    @foreach (var tag in Model.Tags)
-                                    {
-                                        <li><p>@tag</p></li>
-                                    }
-                                </ul>
-                            </div>
-                        </article>
+                                    <i class="bi bi-tags"></i>
+                                    <ul class="tags">
+                                        @foreach (var tag in Model.Tags)
+                                        {
+                                            <li><p>@tag</p></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </article>
+                        </div>
                     </div>
-                </div>
+                    <button class="btn-outline-danger" type="submit">Save Data</button>
+                </form>
             </div>
         </section>
     </main><!-- End #main -->
