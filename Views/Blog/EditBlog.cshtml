@@ -2,7 +2,7 @@
 @using System.Web
 @model Blog
 @{
-    ViewData["Title"] = "Single Blog";
+    ViewData["Title"] = "Edit Blog";
     Layout = "_Layout";
 }
 
@@ -11,7 +11,7 @@
         <!-- ======= Blog Single Section ======= -->
         <section id="blog" class="blog">
             <div class="container" data-aos="fade-up">
-                <form asp-controller="Blog" asp-action="SaveBlog" asp-route-id="@Model.Id" method="post">
+                <form id="formEdit" asp-controller="Blog" asp-action="SaveBlog" asp-route-id="@Model.Id" method="post">
                     <div class="row">
                         <div class="col-lg-8 entries">
                             <article class="entry entry-single">
@@ -53,7 +53,7 @@
                             </article>
                         </div>
                     </div>
-                    <button class="btn-outline-danger" type="submit">Save Data</button>
+                    <button class="btn btn-info" type="submit" onclick="blogSave(event)">Save Data</button>
                 </form>
             </div>
         </section>

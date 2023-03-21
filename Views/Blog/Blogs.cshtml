@@ -9,18 +9,24 @@
         user = ViewData["User"] as User;
 }
 
+
+
 <body>
     <main id="main">
         <!-- ======= Blog Section ======= -->
-        @if (user.Role != null)
-        {
-            <button class="btn btn-primary">
+        <div style="padding-left: 20%">
+            <button class="btn btn-info">
                 <a asp-controller="Blog" asp-action="CreateBlog" asp-route-id="@user.Id">Create a new Blog</a>
             </button>
-        }
+        </div>
         <section id="blog" class="blog">
             @foreach(var blog in Model.blogs)
             {
+                var param = new Dictionary<string, string>{
+                    { "blogID", $"{blog.Id}" },
+                    { "userID", $"{user.Id}" }
+                };
+
                 <div class="container" data-aos="fade-up">
                     <div class="row">
                         <div class="col-lg-8 entries">
@@ -36,23 +42,26 @@
                                 <div class="entry-meta">
                                     <ul>
                                         <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a asp-controller="Blog" asp-action="SingleBlog">@blog.ContentOwner</a></li>
-                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a asp-controller="Blog" asp-action="SingleBlog"><time datetime="2020-01-01">@blog.ReleaseDate.ToString("MM dd, yyyy")</time></a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a asp-controller="Blog" asp-action="SingleBlog"><time>@blog.ReleaseDate.ToString("MMM dd, yyyy hh:mm")</time></a></li>
                                     </ul>
                                 </div>
 
                                 <div class="entry-content">
                                     <p>@blog.ShortContent</p>
-                                    @if(user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
-                                    {
-                                        <button class="btn btn-primary">
-                                            <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@blog.Id">Delete</a>
+                                    <div>
+                                        <br />
+                                        @if (user.Role != null && (user.Role.ToLower() == "admin" || user.Name == blog.ContentOwner))
+                                        {
+                                            <button onclick="blogDelete(event)" class="read-more">
+                                                <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-id="@blog.Id">Delete</a>
+                                            </button>
+                                            <button class="read-more">
+                                                <a asp-controller="Blog" asp-action="EditBlog" asp-all-route-data="@param">Edit</a>
+                                            </button>
+                                        }
+                                        <button class="read-more">
+                                            <a asp-controller="Blog" asp-action="SingleBlog" asp-all-route-data="param">Read More</a>
                                         </button>
-                                        <button class="btn btn-primary">
-                                            <a asp-controller="Blog" asp-action="EditBlog" asp-route-id="@blog.Id">Edit</a>
-                                        </button>
-                                    }
-                                    <div class="read-more">
-                                        <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@blog.Id">Read More</a>
                                     </div>
                                 </div>
                             </article>
@@ -61,17 +70,17 @@
                 </div>
             }
         </section><!-- End Blog Section -->
-        <div>
-            <nav aria-label="...">
-                <ul class="pagination">
+        <div style="padding-right: 20%;">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
                     @for (int i = 1; i <= Model.TotalPages; i++)
                     {
                         if (@i == Model.Page)
                         {
                             <li class="page-item active">
-                                <span class="page-link">
+                                <a class="page-link">
                                     @i
-                                </span>
+                                </a>
                             </li>
                         }
                         else

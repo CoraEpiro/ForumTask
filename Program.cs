@@ -1,8 +1,12 @@
 using ForumTask.DbContexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BlogDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BlogDataContext")
     , settings =>
@@ -11,10 +15,12 @@ builder.Services.AddDbContext<BlogDataContext>(options =>
         settings.MigrationsHistoryTable("EF_TABLE_MIGRATION");
         settings.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
     }));
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddAuthentication
+    (CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(a =>
+    {
+        a.LoginPath = "/User/LogInPage/";
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +36,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

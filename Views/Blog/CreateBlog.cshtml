@@ -3,35 +3,52 @@
 
 <div class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form">
-            <span class="contact100-form-title">
-                Contact Us
-            </span>
+        <form id="formCreate" class="contact100-form" asp-controller="Blog" asp-action="CreateBlog" method="post">
+            <h4>
+                Create A New Blog
+            </h4>
 
-            <div class="wrap-input100 validate-input" data-validate="Please enter your name">
-                <input class="input100" type="text" name="name" placeholder="Full Name" required>
+            <div class="wrap-input100 validate-input">
+                <input class="input100" type="text" name="ContentOwner" value="@ViewData["ContentOwner"]" readonly required>
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="wrap-input100 validate-input" data-validate="Please enter email: e@a.x">
-                <input class="input100" type="text" name="email" placeholder="Email" required>
+            <div class="wrap-input100 validate-input">
+                <input class="input100" type="text" name="Title" placeholder="Title" required>
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="wrap-input100 validate-input" data-validate="Please enter your message">
-                <textarea class="input100" name="message" placeholder="Your Message" required></textarea>
+            <div class="wrap-input100 validate-input">
+                <input class="input100" type="text" name="Category" placeholder="Category" required>
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="container-contact100-form-btn">
-                <button class="contact100-form-btn">
-                    Send Email
-                </button>
+            <div class="wrap-input100 validate-input">
+                <input class="input100" type="datetime" name="ReleaseDate" value="@DateTime.Now.ToString("MMM dd, yyyy hh:mm")" readonly required>
+                <span class="focus-input100"></span>
             </div>
+
+            <div class="wrap-input100 validate-input">
+                <textarea class="input100" name="LongContent" placeholder="Content" required></textarea>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="input-group">
+                <div>
+                    <input class="input100" type="text" name="Tags" placeholder="Tag1">
+                    <span class="focus-input100"></span>
+                </div>
+                <div>
+                    <input class="input100" type="text" name="Tags" placeholder="Tag2">
+                    <span class="focus-input100"></span>
+                </div>
+                <div>
+                    <input class="input100" type="text" name="Tags" placeholder="Tag3">
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+            <br />
+            <button class="contact100-form-btn" type="submit">Create</button>
         </form>
-
-        <div class="contact100-more">
-            Contact our 24/7 call center: <span class="contact100-more-highlight">+001 345 6889</span>
-        </div>
     </div>
 </div>

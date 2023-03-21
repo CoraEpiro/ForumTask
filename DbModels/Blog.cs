@@ -7,8 +7,8 @@ namespace ForumTask.DbModels
     public class StringListToStringConverter : ValueConverter<List<string>, string>
     {
         public StringListToStringConverter() : base(
-            v => string.Join(",=,", v),
-            v => v.Split(",=,", StringSplitOptions.RemoveEmptyEntries).ToList())
+            v => string.Join(",", v),
+            v => v.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList())
         { }
     }
     public class Blog
